@@ -3,7 +3,7 @@ import pulp
 
 print("running optimization")
 # create datatable
-da = pd.read_excel('textstats.xls')
+da = pd.read_excel('DFS.xls')
 df = pd.DataFrame(da, columns=["Name", "Price", "Value", "Pos"])
 
 # create Problem
