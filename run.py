@@ -1,25 +1,26 @@
 import pandas as pd
 import pulp
+import var
 
 print("running optimization")
 
-def optimize(excelsheet, namecol, pricecol, valuecol, poscol):
+def optimize():
 
     # create datatable
-    da = pd.read_excel(excelsheet)
-    df = pd.DataFrame(da, columns=[namecol, pricecol, valuecol, poscol])
+    da = pd.read_excel(var.variables["excelsheet"])
+    df = pd.DataFrame(da, columns=[var.variables["namecol"], var.variables["pricecol"], var.variables["valuecol"], var.variables["poscol"]])
 
     # create list of players
-    players = list(df[namecol])
+    players = list(df[var.variables["namecol"]])
 
     # create dict of prices
-    prices = dict(zip(players, df[pricecol]))
+    prices = dict(zip(players, df[var.variables["pricecol"]]))
 
     # create dict of values/expected fantasy points
-    values = dict(zip(players, df[valuecol]))
+    values = dict(zip(players, df[var.variables["valuecol"]]))
 
     # create dict of posistions
-    positions = dict(zip(players, df[poscol]))
+    positions = dict(zip(players, df[var.variables["poscol"]]))
     
     # create Problem
     prob = pulp.LpProblem("ExpectedScore", pulp.LpMaximize)
@@ -51,4 +52,4 @@ def optimize(excelsheet, namecol, pricecol, valuecol, poscol):
     # print expected fantasy point total
     print("Expected Score: " + str(pulp.value(prob.objective)))
 
-optimize("DFS.xls", "Name", "Price", "Value", "Pos")
+optimize()
